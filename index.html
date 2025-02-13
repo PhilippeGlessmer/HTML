@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Menu Vertical Bootstrap 5</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group">
+                <!-- Premier niveau -->
+                <a href="#" class="list-group-item list-group-item-action active">Menu Principal</a>
+
+                <!-- Item avec sous-menu (2ème niveau) -->
+                <a href="#submenu1" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
+                    ⯆ Niveau 1 - Option 1
+                </a>
+                <div class="collapse ms-3" id="submenu1">
+                    <a href="#" class="list-group-item list-group-item-action">Sous-option 1.1</a>
+                    <a href="#" class="list-group-item list-group-item-action">Sous-option 1.2</a>
+
+                    <!-- Item avec sous-sous-menu (3ème niveau) -->
+                    <a href="#submenu2" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
+                        ⯆ Niveau 2 - Option 1.3
+                    </a>
+                    <div class="collapse ms-3" id="submenu2">
+                        <a href="#" class="list-group-item list-group-item-action">Sous-option 1.3.1</a>
+                        <a href="#" class="list-group-item list-group-item-action">Sous-option 1.3.2</a>
+                    </div>
+                </div>
+
+                <!-- Un autre élément du premier niveau -->
+                <a href="#submenu3" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
+                    ⯆ Niveau 1 - Option 2
+                </a>
+                <div class="collapse ms-3" id="submenu3">
+                    <a href="#" class="list-group-item list-group-item-action">Sous-option 2.1</a>
+                    <a href="#" class="list-group-item list-group-item-action">Sous-option 2.2</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-9">
+            <h3>Contenu principal</h3>
+            <p>Cliquez sur le menu pour naviguer entre les options.</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
