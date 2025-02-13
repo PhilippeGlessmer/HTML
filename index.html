@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
     menuItems.forEach(item => {
         item.addEventListener("show.bs.collapse", function () {
             let niveauActuel = getNiveau(item.id);
-            let parentMenu = item.parentElement.closest(".collapse"); // Trouver le parent direct
+            let parentMenu = item.parentElement.closest(".collapse");
 
             if (niveauActuel === 1) {
                 closeOtherMenus(menuItems, niveauActuel, item);
@@ -28,8 +28,38 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         item.addEventListener("hide.bs.collapse", function () {
+            // Fermer tous les sous-menus enfants lorsqu'un parent est fermé
+            let childMenus = item.querySelectorAll(".collapse.show");
+            childMenus.forEach(child => {
+                let instance = bootstrap.Collapse.getInstance(child) || new bootstrap.Collapse(child, { toggle: false });
+                instance.hide();
+                updateIcon(child, false);
+            });
+
             updateIcon(item, false);
         });
+    });
+
+    // Gestion du clic sur le chevron pour fermer tout le menu enfant
+    document.querySelectorAll(".list-group-item").forEach(button => {
+        let chevron = button.querySelector("i.fa-chevron-right, i.fa-chevron-down");
+        if (chevron) {
+            chevron.addEventListener("click", function (event) {
+                event.preventDefault(); // Empêche l'événement de se propager
+                let targetId = button.getAttribute("href");
+                if (targetId && targetId.startsWith("#")) {
+                    let targetCollapse = document.querySelector(targetId);
+                    if (targetCollapse) {
+                        let instance = bootstrap.Collapse.getInstance(targetCollapse) || new bootstrap.Collapse(targetCollapse, { toggle: false });
+                        if (targetCollapse.classList.contains("show")) {
+                            instance.hide();
+                        } else {
+                            instance.show();
+                        }
+                    }
+                }
+            });
+        }
     });
 
     function closeOtherMenus(menuList, niveau, currentItem) {
@@ -58,6 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return match ? parseInt(match[1], 10) : 1;
     }
 });
+
 
 
 
