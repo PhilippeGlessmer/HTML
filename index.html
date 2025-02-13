@@ -24,6 +24,14 @@
                         });
                     }
                     updateIcon(item, true);
+
+                    // Ouvrir "En cours" automatiquement si on ouvre un Niveau 1
+                    if (item.id.startsWith("submenu1_")) {
+                        let enCoursMenu = document.querySelector(`#submenu2_${item.id.split("_")[1]}_1`);
+                        if (enCoursMenu) {
+                            new bootstrap.Collapse(enCoursMenu).show();
+                        }
+                    }
                 });
 
                 item.addEventListener("hide.bs.collapse", function () {
@@ -50,17 +58,22 @@
     <div class="row">
         <div class="col-md-3">
             <div class="list-group">
-                <a href="#" class="list-group-item list-group-item-action active">Menu Principal</a>
-
-                <!-- Niveau 1 - Option 1 -->
+                              <!-- Niveau 1 - Option 1 -->
                 <a href="#submenu1_1" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
-                    <i class="fa fa-chevron-right me-2"></i> Niveau 1 - Option 1
+                    <i class="fa fa-chevron-right me-2"></i>Action Commercial
                 </a>
                 <div class="collapse ms-3" id="submenu1_1">
                     <a href="#submenu2_1_1" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
-                        <i class="fa fa-chevron-right me-2"></i> Niveau 2 - Option 1.1
+                        <i class="fa fa-chevron-right me-2"></i> En cours
                     </a>
                     <div class="collapse ms-3" id="submenu2_1_1">
+                        <a href="#" class="list-group-item list-group-item-action">Lien 1.1.1</a>
+                        <a href="#" class="list-group-item list-group-item-action">Lien 1.1.2</a>
+                    </div>
+                    <a href="#submenu2_1_2" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
+                        <i class="fa fa-chevron-right me-2"></i> Futur
+                    </a>
+                    <div class="collapse ms-3" id="submenu2_1_2">
                         <a href="#" class="list-group-item list-group-item-action">Lien 1.1.1</a>
                         <a href="#" class="list-group-item list-group-item-action">Lien 1.1.2</a>
                     </div>
@@ -68,13 +81,34 @@
 
                 <!-- Niveau 1 - Option 2 -->
                 <a href="#submenu1_2" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
-                    <i class="fa fa-chevron-right me-2"></i> Niveau 1 - Option 2
+                    <i class="fa fa-chevron-right me-2"></i> Projet
                 </a>
                 <div class="collapse ms-3" id="submenu1_2">
                     <a href="#submenu2_2_1" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
-                        <i class="fa fa-chevron-right me-2"></i> Niveau 2 - Option 2.1
+                        <i class="fa fa-chevron-right me-2"></i> En cours
                     </a>
                     <div class="collapse ms-3" id="submenu2_2_1">
+                        <a href="#" class="list-group-item list-group-item-action">Lien 2.1.1</a>
+                        <a href="#" class="list-group-item list-group-item-action">Lien 2.1.2</a>
+                    </div>
+                    <a href="#submenu2_2_2" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
+                        <i class="fa fa-chevron-right me-2"></i> Futur
+                    </a>
+                    <div class="collapse ms-3" id="submenu2_2_2">
+                        <a href="#" class="list-group-item list-group-item-action">Lien 2.1.1</a>
+                        <a href="#" class="list-group-item list-group-item-action">Lien 2.1.2</a>
+                    </div>
+                    <a href="#submenu2_2_3" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
+                        <i class="fa fa-chevron-right me-2"></i> Annulé
+                    </a>
+                    <div class="collapse ms-3" id="submenu2_2_3">
+                        <a href="#" class="list-group-item list-group-item-action">Lien 2.1.1</a>
+                        <a href="#" class="list-group-item list-group-item-action">Lien 2.1.2</a>
+                    </div>
+                    <a href="#submenu2_2_4" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
+                        <i class="fa fa-chevron-right me-2"></i> Terminé
+                    </a>
+                    <div class="collapse ms-3" id="submenu2_2_4">
                         <a href="#" class="list-group-item list-group-item-action">Lien 2.1.1</a>
                         <a href="#" class="list-group-item list-group-item-action">Lien 2.1.2</a>
                     </div>
@@ -82,29 +116,71 @@
 
                 <!-- Niveau 1 - Option 3 -->
                 <a href="#submenu1_3" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
-                    <i class="fa fa-chevron-right me-2"></i> Niveau 1 - Option 3
+                    <i class="fa fa-chevron-right me-2"></i> Besoin
                 </a>
                 <div class="collapse ms-3" id="submenu1_3">
                     <a href="#submenu2_3_1" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
-                        <i class="fa fa-chevron-right me-2"></i> Niveau 2 - Option 3.1
+                        <i class="fa fa-chevron-right me-2"></i> En cours
                     </a>
                     <div class="collapse ms-3" id="submenu2_3_1">
-                        <a href="#" class="list-group-item list-group-item-action">Lien 3.1.1</a>
-                        <a href="#" class="list-group-item list-group-item-action">Lien 3.1.2</a>
+                        <a href="#" class="list-group-item list-group-item-action">Lien 2.1.1</a>
+                        <a href="#" class="list-group-item list-group-item-action">Lien 2.1.2</a>
+                    </div>
+                    <a href="#submenu2_3_2" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
+                        <i class="fa fa-chevron-right me-2"></i> Futur
+                    </a>
+                    <div class="collapse ms-3" id="submenu2_3_2">
+                        <a href="#" class="list-group-item list-group-item-action">Lien 2.1.1</a>
+                        <a href="#" class="list-group-item list-group-item-action">Lien 2.1.2</a>
+                    </div>
+                    <a href="#submenu2_3_3" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
+                        <i class="fa fa-chevron-right me-2"></i> Annulé
+                    </a>
+                    <div class="collapse ms-3" id="submenu2_3_3">
+                        <a href="#" class="list-group-item list-group-item-action">Lien 2.1.1</a>
+                        <a href="#" class="list-group-item list-group-item-action">Lien 2.1.2</a>
+                    </div>
+                    <a href="#submenu2_3_4" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
+                        <i class="fa fa-chevron-right me-2"></i> Terminé
+                    </a>
+                    <div class="collapse ms-3" id="submenu2_3_4">
+                        <a href="#" class="list-group-item list-group-item-action">Lien 2.1.1</a>
+                        <a href="#" class="list-group-item list-group-item-action">Lien 2.1.2</a>
                     </div>
                 </div>
 
                 <!-- Niveau 1 - Option 4 -->
                 <a href="#submenu1_4" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
-                    <i class="fa fa-chevron-right me-2"></i> Niveau 1 - Option 4
+                    <i class="fa fa-chevron-right me-2"></i> Action
                 </a>
                 <div class="collapse ms-3" id="submenu1_4">
                     <a href="#submenu2_4_1" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
-                        <i class="fa fa-chevron-right me-2"></i> Niveau 2 - Option 4.1
+                        <i class="fa fa-chevron-right me-2"></i> En cours
                     </a>
                     <div class="collapse ms-3" id="submenu2_4_1">
-                        <a href="#" class="list-group-item list-group-item-action">Lien 4.1.1</a>
-                        <a href="#" class="list-group-item list-group-item-action">Lien 4.1.2</a>
+                        <a href="#" class="list-group-item list-group-item-action">Lien 2.1.1</a>
+                        <a href="#" class="list-group-item list-group-item-action">Lien 2.1.2</a>
+                    </div>
+                    <a href="#submenu2_4_2" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
+                        <i class="fa fa-chevron-right me-2"></i> Futur
+                    </a>
+                    <div class="collapse ms-3" id="submenu2_4_2">
+                        <a href="#" class="list-group-item list-group-item-action">Lien 2.1.1</a>
+                        <a href="#" class="list-group-item list-group-item-action">Lien 2.1.2</a>
+                    </div>
+                    <a href="#submenu2_4_3" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
+                        <i class="fa fa-chevron-right me-2"></i> Annulé
+                    </a>
+                    <div class="collapse ms-3" id="submenu2_4_3">
+                        <a href="#" class="list-group-item list-group-item-action">Lien 2.1.1</a>
+                        <a href="#" class="list-group-item list-group-item-action">Lien 2.1.2</a>
+                    </div>
+                    <a href="#submenu2_4_4" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
+                        <i class="fa fa-chevron-right me-2"></i> Terminé
+                    </a>
+                    <div class="collapse ms-3" id="submenu2_4_4">
+                        <a href="#" class="list-group-item list-group-item-action">Lien 2.1.1</a>
+                        <a href="#" class="list-group-item list-group-item-action">Lien 2.1.2</a>
                     </div>
                 </div>
             </div>
@@ -117,7 +193,7 @@
     </div>
 </div>
 <style>
-    .fa-chevron-down::before, .fa-chevron-right::before {
+    .fa-chevron-up::before {
     content: none !important;
 }
 
