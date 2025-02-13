@@ -28,25 +28,27 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             updateIcon(item, true);
 
-            // 🔥 Ouvrir "En cours" UNIQUEMENT si aucun autre sous-menu Niveau 2 est en cours d'ouverture
+            // 🔥 Ouvrir "En cours" UNIQUEMENT si aucun autre sous-menu Niveau 2 est en train de s'ouvrir
             if (item.id.startsWith("submenu1_")) {
                 let niveau1Id = item.id.split("_")[1]; 
                 let enCoursMenu = document.querySelector(`#submenu2_${niveau1Id}_1`);
 
-                // Vérifier si l'utilisateur clique sur un autre sous-menu
-                let allSubmenus = [
+                // Vérifier uniquement les sous-menus existants
+                let otherMenus = [
                     document.querySelector(`#submenu2_${niveau1Id}_2`),
                     document.querySelector(`#submenu2_${niveau1Id}_3`),
                     document.querySelector(`#submenu2_${niveau1Id}_4`)
-                ];
-                
-                let isUserOpeningAnotherSubmenu = allSubmenus.some(menu => menu && menu.classList.contains("collapsing"));
+                ].filter(menu => menu !== null); // 🔥 Filtrer les menus non définis
 
-                // 🔥 On ouvre "En cours" SEULEMENT si aucun autre sous-menu n'est en train de s'ouvrir
-                if (enCoursMenu && !isUserOpeningAnotherSubmenu) {
-                    let instance = bootstrap.Collapse.getInstance(enCoursMenu) || new bootstrap.Collapse(enCoursMenu, {toggle: false});
-                    instance.show();
-                }
+                let isUserOpeningAnotherSubmenu = otherMenus.some(menu => menu.classList.contains("collapsing"));
+
+                // 🔥 Utilisation d'un setTimeout pour éviter la boucle infinie
+                setTimeout(() => {
+                    if (enCoursMenu && !isUserOpeningAnotherSubmenu) {
+                        let instance = bootstrap.Collapse.getInstance(enCoursMenu) || new bootstrap.Collapse(enCoursMenu, {toggle: false});
+                        instance.show();
+                    }
+                }, 10); // 🔥 Petit délai pour éviter la boucle infinie
             }
 
             // 🔥 Fermeture automatique des sous-menus Niveau 2 du même parent
@@ -81,6 +83,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 });
+
+
 
     </script>
 </head>
