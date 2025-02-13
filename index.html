@@ -15,56 +15,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     menuItems.forEach(item => {
         item.addEventListener("show.bs.collapse", function () {
-            let parent = item.parentElement.closest(".list-group"); 
-            if (parent) {
-                let siblings = parent.querySelectorAll(".collapse.show");
-                siblings.forEach(sibling => {
-                    if (sibling !== item && !sibling.contains(item)) {
-                        let instance = bootstrap.Collapse.getInstance(sibling) || new bootstrap.Collapse(sibling, {toggle: false});
-                        instance.hide();
-                        updateIcon(sibling, false);
-                    }
-                });
+            let niveauActuel = getNiveau(item.id);
+            let parentMenu = item.parentElement.closest(".collapse"); // Trouver le parent direct
+
+            if (niveauActuel === 1) {
+                closeOtherMenus(menuItems, niveauActuel, item);
+            } else if (parentMenu) {
+                closeOtherMenus(parentMenu.querySelectorAll(".collapse.show"), niveauActuel, item);
             }
+
             updateIcon(item, true);
-
-            // 🔥 Ouvrir "En cours" UNIQUEMENT si aucun autre sous-menu Niveau 2 est en train de s'ouvrir
-            if (item.id.startsWith("submenu1_")) {
-                let niveau1Id = item.id.split("_")[1]; 
-                let enCoursMenu = document.querySelector(`#submenu2_${niveau1Id}_1`);
-
-                // Vérifier uniquement les sous-menus existants
-                let otherMenus = [
-                    document.querySelector(`#submenu2_${niveau1Id}_2`),
-                    document.querySelector(`#submenu2_${niveau1Id}_3`),
-                    document.querySelector(`#submenu2_${niveau1Id}_4`)
-                ].filter(menu => menu !== null); // 🔥 Filtrer les menus non définis
-
-                let isUserOpeningAnotherSubmenu = otherMenus.some(menu => menu.classList.contains("collapsing"));
-
-                // 🔥 Utilisation d'un setTimeout pour éviter la boucle infinie
-                setTimeout(() => {
-                    if (enCoursMenu && !isUserOpeningAnotherSubmenu) {
-                        let instance = bootstrap.Collapse.getInstance(enCoursMenu) || new bootstrap.Collapse(enCoursMenu, {toggle: false});
-                        instance.show();
-                    }
-                }, 10); // 🔥 Petit délai pour éviter la boucle infinie
-            }
-
-            // 🔥 Fermeture automatique des sous-menus Niveau 2 du même parent
-            if (item.id.startsWith("submenu2_")) {
-                let parentMenu = item.parentElement.closest(".collapse"); // Trouver le parent Niveau 1
-                if (parentMenu) {
-                    let sameLevelSiblings = parentMenu.querySelectorAll(".collapse.show");
-                    sameLevelSiblings.forEach(sibling => {
-                        if (sibling !== item && sibling.parentElement.closest(".collapse") === parentMenu) {
-                            let instance = bootstrap.Collapse.getInstance(sibling) || new bootstrap.Collapse(sibling, {toggle: false});
-                            instance.hide();
-                            updateIcon(sibling, false);
-                        }
-                    });
-                }
-            }
         });
 
         item.addEventListener("hide.bs.collapse", function () {
@@ -72,15 +32,30 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    function closeOtherMenus(menuList, niveau, currentItem) {
+        menuList.forEach(sibling => {
+            if (sibling !== currentItem && getNiveau(sibling.id) === niveau) {
+                let instance = bootstrap.Collapse.getInstance(sibling) || new bootstrap.Collapse(sibling, { toggle: false });
+                instance.hide();
+                updateIcon(sibling, false);
+            }
+        });
+    }
+
     function updateIcon(element, isOpen) {
         let toggleButton = document.querySelector(`[href="#${element.id}"]`);
         if (toggleButton) {
-            let icon = toggleButton.querySelector("i");
+            let icon = toggleButton.querySelector("i.fa-chevron-right, i.fa-chevron-down");
             if (icon) {
                 icon.classList.toggle("fa-chevron-right", !isOpen);
                 icon.classList.toggle("fa-chevron-down", isOpen);
             }
         }
+    }
+
+    function getNiveau(id) {
+        let match = id.match(/submenu(\d+)_/);
+        return match ? parseInt(match[1], 10) : 1;
     }
 });
 
@@ -341,6 +316,77 @@ document.addEventListener("DOMContentLoaded", function () {
 								<a href="#" class="list-group-item list-group-item-action">Lien 2.1.2</a>
 							</div>
 						</div>
+                        <!-- Exemple pour Mes Tâches -->
+                        <a href="#submenu1_5" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
+                            <i class="fa fa-chevron-right me-2"></i> Mes Tâches
+                        </a>
+                        <div class="collapse ms-3" id="submenu1_5">
+                            <!-- Niveau 2 - Actions Commerciales -->
+                            <a href="#submenu2_5_1" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
+                                <i class="fa fa-chevron-right me-2"></i> Actions Commerciales
+                            </a>
+                            <div class="collapse ms-3" id="submenu2_5_1">
+                                <!-- Niveau 3 - En cours -->
+                                <a href="#submenu3_5_1_1" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
+                                    <i class="fa fa-chevron-right me-2"></i> En cours
+                                </a>
+                                <div class="collapse ms-3" id="submenu3_5_1_1">
+                                    <a href="#" class="list-group-item list-group-item-action">Activité 1</a>
+                                    <a href="#" class="list-group-item list-group-item-action">Activité 2</a>
+                                </div>
+                                <!-- Niveau 3 - Terminé -->
+                                <a href="#submenu3_5_1_2" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
+                                    <i class="fa fa-chevron-right me-2"></i> Terminé
+                                </a>
+                                <div class="collapse ms-3" id="submenu3_5_1_2">
+                                    <a href="#" class="list-group-item list-group-item-action">Activité 1</a>
+                                    <a href="#" class="list-group-item list-group-item-action">Activité 2</a>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#submenu1_6" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
+                            <i class="fa fa-chevron-right me-2"></i> Mes Créations
+                        </a>
+                        <div class="collapse ms-3" id="submenu1_6">
+                            <!-- Niveau 2 - Actions Commerciales -->
+                            <a href="#submenu2_6_1" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
+                                <i class="fa fa-chevron-right me-2"></i> Actions Commerciales
+                            </a>
+                            <div class="collapse ms-3" id="submenu2_6_1">
+                                <!-- Niveau 3 - En cours -->
+                                <a href="#submenu3_6_1_1" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
+                                    <i class="fa fa-chevron-right me-2"></i> En cours
+                                </a>
+                                <div class="collapse ms-3" id="submenu3_6_1_1">
+                                    <a href="#" class="list-group-item list-group-item-action">Activité 1</a>
+                                    <a href="#" class="list-group-item list-group-item-action">Activité 2</a>
+                                </div>
+                                <!-- Niveau 3 - En cours -->
+                                <a href="#submenu3_6_1_2" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
+                                    <i class="fa fa-chevron-right me-2"></i> Futur
+                                </a>
+                                <div class="collapse ms-3" id="submenu3_6_1_2">
+                                    <a href="#" class="list-group-item list-group-item-action">Activité 1</a>
+                                    <a href="#" class="list-group-item list-group-item-action">Activité 2</a>
+                                </div>
+                                <!-- Niveau 3 - En cours -->
+                                <a href="#submenu3_6_1_3" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
+                                    <i class="fa fa-chevron-right me-2"></i> Annulé
+                                </a>
+                                <div class="collapse ms-3" id="submenu3_6_1_3">
+                                    <a href="#" class="list-group-item list-group-item-action">Activité 1</a>
+                                    <a href="#" class="list-group-item list-group-item-action">Activité 2</a>
+                                </div>
+                                <!-- Niveau 3 - Terminé -->
+                                <a href="#submenu3_6_1_4" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
+                                    <i class="fa fa-chevron-right me-2"></i> Terminé
+                                </a>
+                                <div class="collapse ms-3" id="submenu3_6_1_4">
+                                    <a href="#" class="list-group-item list-group-item-action">Activité 1</a>
+                                    <a href="#" class="list-group-item list-group-item-action">Activité 2</a>
+                                </div>
+                            </div>
+                        </div>
 					</div>
 	
         </div>
