@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Menu Vertical Bootstrap 5</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .menu {
+            width: 250px;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .menu ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .menu li {
+            margin: 5px 0;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #333;
+            padding: 8px;
+            display: block;
+            border-radius: 5px;
+        }
+
+        .menu a:hover {
+            background: #e9ecef;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-3">
+            <nav class="menu">
+                <ul>
+                    <li>
+                        <a href="#" class="fw-bold">Menu Principal</a>
+                    </li>
+
+                    <!-- Premier niveau -->
+                    <li>
+                        <a href="#submenu1" data-bs-toggle="collapse">⯆ Niveau 1 - Option 1</a>
+                        <ul class="collapse ms-3" id="submenu1">
+                            <li><a href="#">Sous-option 1.1</a></li>
+                            <li><a href="#">Sous-option 1.2</a></li>
+
+                            <!-- Deuxième niveau -->
+                            <li>
+                                <a href="#submenu2" data-bs-toggle="collapse">⯆ Niveau 2 - Option 1.3</a>
+                                <ul class="collapse ms-3" id="submenu2">
+                                    <li><a href="#">Sous-option 1.3.1</a></li>
+                                    <li><a href="#">Sous-option 1.3.2</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <!-- Autre option du premier niveau -->
+                    <li>
+                        <a href="#submenu3" data-bs-toggle="collapse">⯆ Niveau 1 - Option 2</a>
+                        <ul class="collapse ms-3" id="submenu3">
+                            <li><a href="#">Sous-option 2.1</a></li>
+                            <li><a href="#">Sous-option 2.2</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        
+        <div class="col-md-9">
+            <h3>Contenu principal</h3>
+            <p>Cliquez sur le menu pour naviguer entre les options.</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
