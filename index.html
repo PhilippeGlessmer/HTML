@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Menu Vertical Bootstrap 5 - 4 niveaux 1 et 4 niveaux 2</title>
+    <title>Menu Vertical Bootstrap 5 - Avec icônes FontAwesome</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -12,17 +13,34 @@
 
             menuItems.forEach(item => {
                 item.addEventListener("show.bs.collapse", function () {
-                    let parent = item.parentElement.closest(".list-group"); // Trouver le parent du même niveau
+                    let parent = item.parentElement.closest(".list-group"); 
                     if (parent) {
                         let siblings = parent.querySelectorAll(".collapse.show");
                         siblings.forEach(sibling => {
                             if (sibling !== item && !sibling.contains(item)) {
                                 new bootstrap.Collapse(sibling, { toggle: false }).hide();
+                                updateIcon(sibling, false);
                             }
                         });
                     }
+                    updateIcon(item, true);
+                });
+
+                item.addEventListener("hide.bs.collapse", function () {
+                    updateIcon(item, false);
                 });
             });
+
+            function updateIcon(element, isOpen) {
+                let toggleButton = document.querySelector(`[href="#${element.id}"]`);
+                if (toggleButton) {
+                    let icon = toggleButton.querySelector("i");
+                    if (icon) {
+                        icon.classList.toggle("fa-chevron-right", !isOpen);
+                        icon.classList.toggle("fa-chevron-down", isOpen);
+                    }
+                }
+            }
         });
     </script>
 </head>
@@ -36,93 +54,57 @@
 
                 <!-- Niveau 1 - Option 1 -->
                 <a href="#submenu1_1" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
-                    ⯆ Niveau 1 - Option 1
+                    <i class="fa fa-chevron-right me-2"></i> Niveau 1 - Option 1
                 </a>
                 <div class="collapse ms-3" id="submenu1_1">
-                    <!-- Niveau 2 - Options -->
                     <a href="#submenu2_1_1" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
-                        ⯆ Niveau 2 - Option 1.1
+                        <i class="fa fa-chevron-right me-2"></i> Niveau 2 - Option 1.1
                     </a>
                     <div class="collapse ms-3" id="submenu2_1_1">
                         <a href="#" class="list-group-item list-group-item-action">Lien 1.1.1</a>
                         <a href="#" class="list-group-item list-group-item-action">Lien 1.1.2</a>
                     </div>
-
-                    <a href="#submenu2_1_2" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
-                        ⯆ Niveau 2 - Option 1.2
-                    </a>
-                    <div class="collapse ms-3" id="submenu2_1_2">
-                        <a href="#" class="list-group-item list-group-item-action">Lien 1.2.1</a>
-                        <a href="#" class="list-group-item list-group-item-action">Lien 1.2.2</a>
-                    </div>
                 </div>
 
                 <!-- Niveau 1 - Option 2 -->
                 <a href="#submenu1_2" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
-                    ⯆ Niveau 1 - Option 2
+                    <i class="fa fa-chevron-right me-2"></i> Niveau 1 - Option 2
                 </a>
                 <div class="collapse ms-3" id="submenu1_2">
-                    <!-- Niveau 2 - Options -->
                     <a href="#submenu2_2_1" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
-                        ⯆ Niveau 2 - Option 2.1
+                        <i class="fa fa-chevron-right me-2"></i> Niveau 2 - Option 2.1
                     </a>
                     <div class="collapse ms-3" id="submenu2_2_1">
                         <a href="#" class="list-group-item list-group-item-action">Lien 2.1.1</a>
                         <a href="#" class="list-group-item list-group-item-action">Lien 2.1.2</a>
                     </div>
-
-                    <a href="#submenu2_2_2" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
-                        ⯆ Niveau 2 - Option 2.2
-                    </a>
-                    <div class="collapse ms-3" id="submenu2_2_2">
-                        <a href="#" class="list-group-item list-group-item-action">Lien 2.2.1</a>
-                        <a href="#" class="list-group-item list-group-item-action">Lien 2.2.2</a>
-                    </div>
                 </div>
 
                 <!-- Niveau 1 - Option 3 -->
                 <a href="#submenu1_3" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
-                    ⯆ Niveau 1 - Option 3
+                    <i class="fa fa-chevron-right me-2"></i> Niveau 1 - Option 3
                 </a>
                 <div class="collapse ms-3" id="submenu1_3">
-                    <!-- Niveau 2 - Options -->
                     <a href="#submenu2_3_1" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
-                        ⯆ Niveau 2 - Option 3.1
+                        <i class="fa fa-chevron-right me-2"></i> Niveau 2 - Option 3.1
                     </a>
                     <div class="collapse ms-3" id="submenu2_3_1">
                         <a href="#" class="list-group-item list-group-item-action">Lien 3.1.1</a>
                         <a href="#" class="list-group-item list-group-item-action">Lien 3.1.2</a>
                     </div>
-
-                    <a href="#submenu2_3_2" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
-                        ⯆ Niveau 2 - Option 3.2
-                    </a>
-                    <div class="collapse ms-3" id="submenu2_3_2">
-                        <a href="#" class="list-group-item list-group-item-action">Lien 3.2.1</a>
-                        <a href="#" class="list-group-item list-group-item-action">Lien 3.2.2</a>
-                    </div>
                 </div>
 
                 <!-- Niveau 1 - Option 4 -->
                 <a href="#submenu1_4" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
-                    ⯆ Niveau 1 - Option 4
+                    <i class="fa fa-chevron-right me-2"></i> Niveau 1 - Option 4
                 </a>
                 <div class="collapse ms-3" id="submenu1_4">
-                    <!-- Niveau 2 - Options -->
                     <a href="#submenu2_4_1" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
-                        ⯆ Niveau 2 - Option 4.1
+                        <i class="fa fa-chevron-right me-2"></i> Niveau 2 - Option 4.1
                     </a>
                     <div class="collapse ms-3" id="submenu2_4_1">
                         <a href="#" class="list-group-item list-group-item-action">Lien 4.1.1</a>
                         <a href="#" class="list-group-item list-group-item-action">Lien 4.1.2</a>
-                    </div>
-
-                    <a href="#submenu2_4_2" class="list-group-item list-group-item-action" data-bs-toggle="collapse">
-                        ⯆ Niveau 2 - Option 4.2
-                    </a>
-                    <div class="collapse ms-3" id="submenu2_4_2">
-                        <a href="#" class="list-group-item list-group-item-action">Lien 4.2.1</a>
-                        <a href="#" class="list-group-item list-group-item-action">Lien 4.2.2</a>
                     </div>
                 </div>
             </div>
