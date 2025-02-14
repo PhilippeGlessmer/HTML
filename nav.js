@@ -1,6 +1,6 @@
-script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-      document.addEventListener("DOMContentLoaded", function () {
+import { Collapse } from "bootstrap";
+
+document.addEventListener("DOMContentLoaded", function () {
     let menuItems = document.querySelectorAll(".collapse");
 
     menuItems.forEach(item => {
@@ -25,7 +25,7 @@ script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundl
     function closeOtherMenus(menuList, niveau, currentItem) {
         menuList.forEach(sibling => {
             if (sibling !== currentItem && getNiveau(sibling.id) === niveau) {
-                let instance = bootstrap.Collapse.getInstance(sibling) || new bootstrap.Collapse(sibling, { toggle: false });
+                let instance = Collapse.getInstance(sibling) || new Collapse(sibling, { toggle: false });
                 instance.hide();
                 updateIcon(sibling, false);
             }
@@ -48,4 +48,3 @@ script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundl
         return match ? parseInt(match[1], 10) : 1;
     }
 });
-</script>
